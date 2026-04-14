@@ -8,71 +8,72 @@ class Ejercicio {
     int codigo;
     string nombre;
     string descripcion;
-    int tipo;
+    int intensidad;
     int ultimaSemana;
     int tiempoMinutos;
 
   public:
     // Constructor y destructor
-    Ejercicio(int cod, string nom, string desc, int tipo, int sem, int tiempo);
-    ~Ejercicio();
+    Ejercicio(int cod, string nom, string desc, int inten, int sem, int tiempo);
+    virtual ~Ejercicio();
 
     // Getters
     int getCodigo();
     string getNombre();
-    string getDescripcion();
-    int getTipo();
+    string getDescripcion(); // No se usa
+    string getIntensidadString();
+    int getIntensidad();
     int getUltimaSemana();
-    int getTiempoMinutos();
+    int getTiempoMinutos(); // No se usa
 
     // Setters
     void setNombre(string nom);
     void setDescripcion(string desc);
-    void setTipo(int tipo);
+    void setIntensidad(int inten);
     void setUltimaSemana(int sem);
     void setTiempoMinutos(int tiempo);
 
+    virtual int getTipo();
     virtual void mostrarInfo();
 };
 
-class Basico : public Ejercicio {
+class Fuerza : public Ejercicio {
   public:
-    Basico(int cod, string nom, string desc, int tipo, int sem, int tiempo);
-    ~Basico();
+    Fuerza(int cod, string nom, string desc, int inten, int sem, int tiempo);
+    ~Fuerza();
+    int getTipo();
     void mostrarInfo();
 };
 
-class Intermedio : public Ejercicio {
+class Cardio : public Ejercicio {
   public:
-    Intermedio(int cod, string nom, string desc, int tipo, int sem, int tiempo);
-    ~Intermedio();
-    void mostrarInfo();
-};
-
-class Avanzado : public Ejercicio {
-  public:
-    Avanzado(int cod, string nom, string desc, int tipo, int sem, int tiempo);
-    ~Avanzado();
-    void mostrarInfo();
-};
-
-class AltoRendimiento : public Ejercicio {
-  public:
-    AltoRendimiento(int cod, string nom, string desc, int tipo, int sem, int tiempo);
-    ~AltoRendimiento();
+    Cardio(int cod, string nom, string desc, int inten, int sem, int tiempo);
+    ~Cardio();
+    int getTipo();
     void mostrarInfo();
 };
 
 class Rutina {
-  public:
+  private:
     string cliente;
     int nivelIntensidad;
-    vector<Ejercicio*> ejercicios;
+    vector<Ejercicio*> rutina;
 
+  public:
     Rutina(string cliente, int nivel);
     ~Rutina();
 
     void agregarEjercicio(Ejercicio* ejercicio);
+    void eliminarEjercicio(int indice);
     int calcularTiempoTotal();
     void mostrarRutina();
+    void liberarRutina();
+
+    // Getters
+    string getCliente();
+    int getNivelIntensidad();
+    vector<Ejercicio*> getEjercicios();
+
+    // Setters
+    void setNivelIntensidad(int nivel);
 };
