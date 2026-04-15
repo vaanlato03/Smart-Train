@@ -1,9 +1,7 @@
-#include <iostream>
-#include <vector>
 #include "Funciones.h"
-using namespace std;
 
 int main(){
+  // Llama a la función de flujo principal del programa.
   GestorDeRutinas();
   return 0;
 }

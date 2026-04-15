@@ -1,6 +1,4 @@
 #include <iostream>
-#include <string>
-#include <vector>
 #include "Ejercicios_clases.h"
 using namespace std;
 
@@ -26,12 +24,9 @@ string Ejercicio::getNombre() {
   return this->nombre;
 }
 
-string Ejercicio::getDescripcion() {
-  return this->descripcion;
-}
-
 string Ejercicio::getIntensidadString() {
   string inten;
+  // Interpreta la intensidad para devolverla como texto.
   switch (this->intensidad){
     case 1: inten = "Basico"; break;
     case 2: inten = "Intermedio"; break;
@@ -76,7 +71,7 @@ void Ejercicio::setTiempoMinutos(int tiempo) {
 
 // Otros métodos clase Ejercicio
 int Ejercicio::getTipo() {
-  return 0;
+  return 0; // Por defecto 0, debe ser sobreescrito por las clases Fuerza o Cardio.
 }
 
 void Ejercicio::mostrarInfo() {
@@ -99,8 +94,8 @@ int Fuerza::getTipo() {
 }
 
 void Fuerza::mostrarInfo() {
-  Ejercicio::mostrarInfo();
-  cout << "TIPO: Fuerza" << endl;
+  Ejercicio::mostrarInfo(); // Utiliza el método de la clase base
+  cout << "TIPO: Fuerza" << endl; // y lo extiende con la información del tipo.
   cout << "=============================================" << endl;
 }
 
@@ -115,8 +110,8 @@ int Cardio::getTipo() {
 }
 
 void Cardio::mostrarInfo() {
-  Ejercicio::mostrarInfo();
-  cout << "TIPO: Cardiovascular" << endl;
+  Ejercicio::mostrarInfo(); // Utiliza el método de la clase base
+  cout << "TIPO: Cardiovascular" << endl; // y lo extiende con la información del tipo.
   cout << "=============================================" << endl;
 }
 
@@ -127,21 +122,22 @@ Rutina::Rutina(string cliente, int nivel) {
 }
 
 Rutina::~Rutina() {
-  cout << "Se elimino la rutina del cliente " << this->cliente << endl;
+  this->limpiarRutina();
 }
 
 // Métodos clase Rutina
 void Rutina::agregarEjercicio(Ejercicio* ejercicio) {
-  this->rutina.push_back(ejercicio);
+  this->rutina.push_back(ejercicio); // Agrega un ejercicio al final con push_back.
 }
 
 void Rutina::eliminarEjercicio(int indice) {
-  delete this->rutina[indice];
-  this->rutina.erase(this->rutina.begin() + indice);
+  delete this->rutina[indice]; // Destruye el ejercicio en el índice solicitado.
+  this->rutina.erase(this->rutina.begin() + indice); // Elimina el espacio en el vector.
 }
 
 int Rutina::calcularTiempoTotal() {
   int tiempoTotal = 0;
+  // Recorre el vector y suma el tiempo de cada ejercicio con getTiempoMinutos().
   for (int i = 0; i < this->rutina.size(); i++) {
     tiempoTotal += this->rutina[i]->getTiempoMinutos();
   }
@@ -166,19 +162,13 @@ void Rutina::mostrarRutina() {
   cout << "=============================================" << endl;
 }
 
-void Rutina::liberarRutina() {
-  for (int i = 0; i < this->rutina.size(); i++) {
-    delete this->rutina[i];
-  }
-  this->rutina.clear();
+void Rutina::limpiarRutina() {
+  this->rutina.clear(); // Limpia el vector.
 }
 
+// Getters clase Rutina
 string Rutina::getCliente() {
   return this->cliente;
-}
-
-void Rutina::setNivelIntensidad(int nivel) {
-  this->nivelIntensidad = nivel;
 }
 
 vector<Ejercicio*> Rutina::getEjercicios() {
